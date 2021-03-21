@@ -40,12 +40,15 @@ VBoxManage storagectl $vmname --name SATA --add SATA --controller IntelAhci
 VBoxManage storageattach $vmname --storagectl SATA --port 0 --device 0 --type hdd --medium $vdiname
 VBoxManage storagectl $vmname --name IDE --add ide
 VBoxManage storageattach $vmname --storagectl IDE --port 0 --device 0 --type dvddrive --medium $isoname
-VBoxManage modifyvm $vmname --memory $memory --vram 16
+VBoxManage modifyvm $vmname --memory $memory --vram 32
 VBoxManage modifyvm $vmname --ioapic on
 
 VBoxManage modifyvm $vmname --boot1 dvd --boot2 disk --boot3 none --boot4 none
 VBoxManage modifyvm $vmname --cpus 2
 VBoxManage modifyvm $vmname --audio none
 VBoxManage modifyvm $vmname --nic1 nat
+VBoxManage modifyvm $vmname --natpf1 ssh,tcp,127.0.0.1,2022,10.0.2.15,22
 echo "Unattended:"
 VBoxManage unattended install $vmname --user=${vm_user} --password=${vm_password} --country=IE --time-zone=GMT --hostname=server01.example.com --iso=${isoname} --start-vm=gui --no-install-additions --full-user-name=${vm_user}
+sleep 5m
+
