@@ -48,6 +48,7 @@ VBoxManage modifyvm $vmname --cpus 2
 VBoxManage modifyvm $vmname --audio none
 VBoxManage modifyvm $vmname --nic1 nat
 VBoxManage modifyvm $vmname --natpf1 ssh,tcp,127.0.0.1,2022,10.0.2.15,22
+VBoxManage modifyvm $vmname --graphicscontroller vmsvga
 echo "Unattended:"
 VBoxManage unattended install $vmname --user=${vm_user} --password=${vm_password} --country=IE --time-zone=GMT --hostname=server01.example.com --iso=${isoname} --start-vm=gui --no-install-additions --full-user-name=${vm_user}
 
@@ -59,4 +60,4 @@ echo "echo -ne \"PubkeyAuthentication yes\\nAuthorizedKeysFile	.ssh/authorized_k
 echo "/etc/init.d/ssh restart"
 echo "Press enter to continue when this will be done"
 ssh-copy-id -p 2022 ${vm_user}@127.0.0.1
-ssh -p 2022 ${vm_user}@127.0.0.1 "git clone https://github.com/mickvav/devenvs_vbox.git && cd devenvs_vbox && ./postinstall.sh"
+ssh -p 2022 ${vm_user}@127.0.0.1 "git clone https://github.com/mickvav/devenvs_vbox.git && cd devenvs_vbox && bash ./postinstall.sh"
